@@ -27,7 +27,14 @@ from .simulation import (
     SEED,
 )
 from .risk import var_es
-from .plots import plot_pnl_distribution
+from .plots import plot_pnl_distribution, plot_tail_comparison
+from .fat_tails import (
+    corr_from_cov,
+    fit_marginal_dfs,
+    fit_joint_df,
+    multivariate_t_returns,
+    t_copula_returns,
+)
 
 __all__ = [
     "FXForward",
@@ -58,4 +65,11 @@ __all__ = [
     "SEED",
     "var_es",
     "plot_pnl_distribution",
+    "plot_tail_comparison",
+    # Phase 3
+    "corr_from_cov",
+    "fit_marginal_dfs",
+    "fit_joint_df",
+    "multivariate_t_returns",
+    "t_copula_returns",
 ]
