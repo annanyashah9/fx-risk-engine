@@ -130,3 +130,55 @@ def default_portfolio() -> list[FXForward]:
             sign=-1,                       # long USD == short the JPY notional
         ),
     ]
+
+
+# ---------------------------------------------------------------------------
+# Brexit capstone configuration (June 2016 pre-referendum, GBP-emphasized book)
+# ---------------------------------------------------------------------------
+# Pre-referendum spot levels (approx. 23 June 2016). Contracted = spot (at-the-money
+# forwards struck at inception), so the base MTM is ~0 and the simulated P&L is the pure
+# horizon move — exactly what we want for the event study.
+BREXIT_SPOT_RATES = {
+    "EURUSD": 1.13,    # USD per EUR
+    "GBPUSD": 1.48,    # USD per GBP (pre-vote)
+    "USDJPY": 106.0,   # JPY per USD
+}
+
+
+def brexit_portfolio() -> list[FXForward]:
+    """GBP-emphasized pre-referendum book for the Brexit capstone.
+
+    GBP/USD is the dominant leg (the position most exposed to a Leave outcome); EUR/USD and
+    USD/JPY are kept small to carry the correlated spillover. Same conventions as
+    `default_portfolio` (incl. the inverted USD/JPY: long USD == sign -1). At-the-money
+    forwards (contracted = current spot) so base MTM ~ 0.
+    """
+    return [
+        FXForward(
+            pair="EURUSD",
+            notional=5_000_000,            # EUR 5,000,000 (spillover leg)
+            notional_ccy="EUR",
+            contracted_rate=BREXIT_SPOT_RATES["EURUSD"],
+            horizon_days=10,
+            quote=USD_PER_FOREIGN,
+            sign=+1,                        # long EUR
+        ),
+        FXForward(
+            pair="GBPUSD",
+            notional=25_000_000,           # GBP 25,000,000 (DOMINANT GBP exposure)
+            notional_ccy="GBP",
+            contracted_rate=BREXIT_SPOT_RATES["GBPUSD"],
+            horizon_days=10,
+            quote=USD_PER_FOREIGN,
+            sign=+1,                        # long GBP
+        ),
+        FXForward(
+            pair="USDJPY",
+            notional=200_000_000,          # JPY 200,000,000 (small spillover leg)
+            notional_ccy="JPY",
+            contracted_rate=BREXIT_SPOT_RATES["USDJPY"],
+            horizon_days=10,
+            quote=FOREIGN_PER_USD,
+            sign=-1,                        # long USD == short the JPY notional
+        ),
+    ]

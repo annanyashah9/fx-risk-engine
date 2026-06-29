@@ -6,8 +6,10 @@ Phase 1 public API: portfolio definition, MTM revaluation, and static +/-10% str
 from .portfolio import (
     FXForward,
     default_portfolio,
+    brexit_portfolio,
     CONTRACTED_RATES,
     SPOT_RATES,
+    BREXIT_SPOT_RATES,
     USD_PER_FOREIGN,
     FOREIGN_PER_USD,
 )
@@ -27,7 +29,14 @@ from .simulation import (
     SEED,
 )
 from .risk import var_es
-from .plots import plot_pnl_distribution, plot_tail_comparison
+from .plots import (
+    plot_pnl_distribution,
+    plot_tail_comparison,
+    plot_four_method_overlay,
+    plot_crisis_regimes,
+    plot_brexit_sweep,
+    plot_brexit_distribution,
+)
 from .fat_tails import (
     corr_from_cov,
     fit_marginal_dfs,
@@ -35,12 +44,22 @@ from .fat_tails import (
     multivariate_t_returns,
     t_copula_returns,
 )
+from .events import (
+    crisis_correlation,
+    mechanism_a_jumps,
+    mechanism_b_event,
+    full_model_returns,
+    JumpParams,
+    EventParams,
+)
 
 __all__ = [
     "FXForward",
     "default_portfolio",
+    "brexit_portfolio",
     "CONTRACTED_RATES",
     "SPOT_RATES",
+    "BREXIT_SPOT_RATES",
     "USD_PER_FOREIGN",
     "FOREIGN_PER_USD",
     "mtm",
@@ -66,10 +85,21 @@ __all__ = [
     "var_es",
     "plot_pnl_distribution",
     "plot_tail_comparison",
+    "plot_four_method_overlay",
+    "plot_crisis_regimes",
+    "plot_brexit_sweep",
+    "plot_brexit_distribution",
     # Phase 3
     "corr_from_cov",
     "fit_marginal_dfs",
     "fit_joint_df",
     "multivariate_t_returns",
     "t_copula_returns",
+    # Phase 4
+    "crisis_correlation",
+    "mechanism_a_jumps",
+    "mechanism_b_event",
+    "full_model_returns",
+    "JumpParams",
+    "EventParams",
 ]
